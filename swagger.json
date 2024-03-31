@@ -1,0 +1,241 @@
+// 20230923100010
+// http://localhost:8080/v3/api-docs
+
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/users/userSession": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "userSession",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/auth": {
+      "put": {
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "auth",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthUser"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/images/putComment": {
+      "put": {
+        "tags": [
+          "imaging-controller"
+        ],
+        "operationId": "putComment",
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommentEmotion"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/images/random-image": {
+      "get": {
+        "tags": [
+          "imaging-controller"
+        ],
+        "operationId": "getRandomImage",
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Image"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/emotions": {
+      "get": {
+        "tags": [
+          "emotions-controller"
+        ],
+        "operationId": "getEmotions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Emotions"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "authorizationRecording": {
+            "type": "boolean"
+          }
+        }
+      },
+      "AuthUser": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "pwd": {
+            "type": "string"
+          }
+        }
+      },
+      "CommentEmotion": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string"
+          },
+          "idImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "idEmotion": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "idImage": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            }
+          }
+        }
+      },
+      "Emotions": {
+        "type": "object",
+        "properties": {
+          "idEmotion": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "emotion": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
